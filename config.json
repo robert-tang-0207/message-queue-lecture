@@ -1,0 +1,11 @@
+{
+  "kafka": {
+    "bootstrap_servers": "localhost:9092",
+    "topic": "message_queue_demo",
+    "group_id": "demo_group"
+  },
+  "rabbitmq": {
+    "host": "localhost",
+    "queue": "message_queue_demo"
+  }
+}
