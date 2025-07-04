@@ -7,11 +7,11 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
 ## Slide 1: Title Slide
 **Messaging Queues: Asynchronous Communication for Modern Systems**
 
-- Presented by: [Your Name]
+- Presented by: Robert Tang
 - Date: July 2025
 - Objective: Explore messaging queues, RabbitMQ, Kafka, AWS services, and a practical example
 
-![Messaging Queue Icon](https://img.icons8.com/color/96/000000/message-queue.png)
+![Messaging Queue Icon](https://img.icons8.com/color/96/message-queue.png)
 
 **Notes**: Introduce the importance of messaging queues in distributed systems.
 
@@ -28,7 +28,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
   - Improves scalability and reliability
   - Handles peak loads
 
-![Producer-Consumer Diagram](https://www.rabbitmq.com/img/tutorials/intro/hello-world.png)
+![Producer-Consumer Diagram](https://www.rabbitmq.com/img/tutorials/python-one.png)
 
 **Notes**: Explain how queues decouple producers and consumers, using the diagram.
 
@@ -45,7 +45,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
 - **Traditional Queues**: Low-latency, short-term storage (e.g., RabbitMQ)
 - **Streaming Platforms**: High-throughput, persistent storage (e.g., Kafka)
 
-![P2P vs Pub/Sub](https://www.cloudamqp.com/images/blog/pubsub-vs-queue.png)
+![P2P vs Pub/Sub](https://www.cloudamqp.com/img/blog/pubsub-vs-queue.png)
 
 **Notes**: Highlight differences between P2P and Pub/Sub with the image.
 
@@ -75,7 +75,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
 - **Alternatives**: Postgres for simple queues, Temporal for workflows
 - Source: Hacker News (https://news.ycombinator.com/item?id=43993982)
 
-![Trends Graph](https://img.icons8.com/ios/100/000000/trend.png)
+![Trends Graph](https://img.icons8.com/ios/100/trend.png)
 
 **Notes**: Highlight the growing use of Postgres for queuing, citing recent discussions.
 
@@ -89,7 +89,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
 - Ideal for low-latency, traditional messaging
 - Widely used in enterprises (e.g., Cloud Foundry)
 
-![RabbitMQ Logo](https://www.rabbitmq.com/img/rabbitmq_logo.svg)
+![RabbitMQ Logo](https://www.rabbitmq.com/img/logo-rabbitmq.svg)
 
 **Notes**: Introduce RabbitMQ’s history and enterprise adoption.
 
@@ -103,7 +103,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
 - **Queues**: Store messages until consumed
 - **Consumers**: Process messages
 
-![RabbitMQ Architecture](https://www.rabbitmq.com/img/tutorials/intro/exchange.png)
+![RabbitMQ Architecture](https://www.rabbitmq.com/img/tutorials/python-three.png)
 
 **Notes**: Use the diagram to explain exchange-to-queue routing.
 
@@ -118,7 +118,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
 - High availability via mirrored queues
 - User-friendly management UI
 
-![RabbitMQ Dashboard](https://www.cloudamqp.com/images/rabbitmq_management_ui.png)
+![RabbitMQ Dashboard](https://www.cloudamqp.com/img/blog/rabbitmq-management-interface.png)
 
 **Notes**: Highlight ease of use with the management UI screenshot.
 
@@ -158,7 +158,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
 - Rich ecosystem: Kafka Streams, Kafka Connect
 - Used by Netflix, Uber, etc.
 
-![Kafka Logo](https://kafka.apache.org/images/kafka_logo.png)
+![Kafka Logo](https://kafka.apache.org/images/apache-kafka.png)
 
 **Notes**: Introduce Kafka’s history and high-profile adopters.
 
@@ -200,7 +200,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
 - **Data Pipelines**: ETL with Kafka Connect
 - **Example**: Netflix streaming analytics
 
-![Analytics Pipeline](https://img.icons8.com/color/96/000000/data.png)
+![Analytics Pipeline](https://img.icons8.com/color/96/data-configuration.png)
 
 **Notes**: Discuss Netflix’s use of Kafka for analytics.
 
@@ -231,7 +231,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
   - High-throughput, scalable
   - Integrates with S3, Redshift
 
-![AWS Logo](https://d1.awsstatic.com/logos/aws-logo-lockups/lockup_AWS_Logo.6b6e7f3b0a8a6b0b5a5b5b5b5b5b5b5b5b5b5b5b.png)
+![AWS Logo](https://d1.awsstatic.com/logos/aws-logo-lockups/poweredbyaws/PB_AWS_logo_RGB_stacked_REV_SQ.91cd4af40773cbfbd15577a3c2b8a346fe3e8fa2.png)
 
 **Notes**: Introduce AWS’s managed services.
 
@@ -247,7 +247,7 @@ This Markdown file provides a 90-minute presentation on Messaging Queues, coveri
 | **Throughput**         | Tens of thousands    | Millions/sec       |
 | **Scalability**        | Vertical, some horizontal | Horizontal |
 
-![AWS Integration](https://d1.awsstatic.com/architecture-diagrams/ArchitectureDiagram-Messaging.f4f6f7f6f7f6f7f6f7f6f7f6f7f6f7f6f7f6f7f6.png)
+![AWS Integration](https://d1.awsstatic.com/architecture-diagrams/product-page-diagrams/Product-Page-Diagram_Amazon-MQ.a5fb0e2f2c82d4e9a42022e0c3c4a799ab6f8983.png)
 
 **Notes**: Use the table and image to compare AWS services.
 
