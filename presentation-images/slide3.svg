@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="400" y="80" font-family="Arial" font-size="36" font-weight="bold" text-anchor="middle" fill="#333">RabbitMQ: The Messaging Broker</text>
+  
+  <!-- RabbitMQ Logo -->
+  <g transform="translate(100, 140) scale(0.5)">
+    <path d="M30,40 L90,40 L90,100 L30,100 Z" fill="#ff6600"/>
+    <path d="M110,40 L170,40 L170,100 L110,100 Z" fill="#ff6600"/>
+    <path d="M30,120 L90,120 L90,180 L30,180 Z" fill="#ff6600"/>
+    <path d="M110,120 L170,120 L170,180 L110,180 Z" fill="#ff6600"/>
+    <circle cx="100" cy="110" r="80" fill="none" stroke="#ff6600" stroke-width="10"/>
+    <path d="M60,70 L140,150 M60,150 L140,70" stroke="#ff6600" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Timeline -->
+  <line x1="100" y1="250" x2="700" y2="250" stroke="#ddd" stroke-width="4"/>
+  
+  <circle cx="200" cy="250" r="10" fill="#ff6600"/>
+  <text x="200" y="280" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">2007</text>
+  <text x="200" y="300" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Created by</text>
+  <text x="200" y="320" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Rabbit Technologies</text>
+  
+  <circle cx="400" cy="250" r="10" fill="#ff6600"/>
+  <text x="400" y="280" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">2010</text>
+  <text x="400" y="300" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Acquired by</text>
+  <text x="400" y="320" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">VMware</text>
+  
+  <circle cx="600" cy="250" r="10" fill="#ff6600"/>
+  <text x="600" y="280" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Present</text>
+  <text x="600" y="300" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Widely used</text>
+  <text x="600" y="320" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">messaging broker</text>
+  
+  <!-- Key Features -->
+  <rect x="100" y="350" width="600" height="200" rx="10" fill="white" stroke="#ddd" stroke-width="2"/>
+  
+  <text x="150" y="380" font-family="Arial" font-size="22" font-weight="bold" fill="#333">Key Features</text>
+  
+  <circle cx="130" cy="420" r="8" fill="#ff6600"/>
+  <text x="150" y="425" font-family="Arial" font-size="18" fill="#333">Multiple protocols: AMQP, MQTT, STOMP</text>
+  
+  <circle cx="130" cy="460" r="8" fill="#ff6600"/>
+  <text x="150" y="465" font-family="Arial" font-size="18" fill="#333">Flexible routing with exchanges</text>
+  
+  <circle cx="130" cy="500" r="8" fill="#ff6600"/>
+  <text x="150" y="505" font-family="Arial" font-size="18" fill="#333">High availability with clustering</text>
+  
+  <!-- Use Cases -->
+  <text x="450" y="380" font-family="Arial" font-size="22" font-weight="bold" fill="#333">Use Cases</text>
+  
+  <circle cx="430" cy="420" r="8" fill="#ff6600"/>
+  <text x="450" y="425" font-family="Arial" font-size="18" fill="#333">Task distribution</text>
+  
+  <circle cx="430" cy="460" r="8" fill="#ff6600"/>
+  <text x="450" y="465" font-family="Arial" font-size="18" fill="#333">Real-time messaging</text>
+</svg>

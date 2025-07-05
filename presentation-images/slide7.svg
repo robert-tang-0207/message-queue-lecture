@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="400" y="80" font-family="Arial" font-size="36" font-weight="bold" text-anchor="middle" fill="#333">RabbitMQ vs Kafka: A Comparison</text>
+  
+  <!-- Comparison Table -->
+  <rect x="100" y="130" width="600" height="420" rx="10" fill="white" stroke="#ddd" stroke-width="2"/>
+  
+  <!-- Table Header -->
+  <rect x="100" y="130" width="200" height="60" rx="10 0 0 0" fill="#4285f4" stroke="#2a56c6" stroke-width="2"/>
+  <text x="200" y="170" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="white">Feature</text>
+  
+  <rect x="300" y="130" width="200" height="60" fill="#ff6600" stroke="#e37400" stroke-width="2"/>
+  <text x="400" y="170" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="white">RabbitMQ</text>
+  
+  <rect x="500" y="130" width="200" height="60" rx="0 10 0 0" fill="#231f20" stroke="#000" stroke-width="2"/>
+  <text x="600" y="170" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="white">Kafka</text>
+  
+  <!-- Row 1: Model -->
+  <rect x="100" y="190" width="200" height="60" fill="#e8f0fe" stroke="#ddd" stroke-width="1"/>
+  <text x="200" y="225" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">Model</text>
+  
+  <rect x="300" y="190" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="400" y="225" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Message queue (AMQP)</text>
+  
+  <rect x="500" y="190" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="600" y="225" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Event streaming (log-based)</text>
+  
+  <!-- Row 2: Scalability -->
+  <rect x="100" y="250" width="200" height="60" fill="#e8f0fe" stroke="#ddd" stroke-width="1"/>
+  <text x="200" y="285" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">Scalability</text>
+  
+  <rect x="300" y="250" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="400" y="285" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Moderate (clustering)</text>
+  
+  <rect x="500" y="250" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="600" y="285" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">High (partitioned topics)</text>
+  
+  <!-- Row 3: Latency -->
+  <rect x="100" y="310" width="200" height="60" fill="#e8f0fe" stroke="#ddd" stroke-width="1"/>
+  <text x="200" y="345" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">Latency</text>
+  
+  <rect x="300" y="310" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="400" y="345" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Higher for complex routing</text>
+  
+  <rect x="500" y="310" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="600" y="345" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Lower for high-throughput</text>
+  
+  <!-- Row 4: Use Case -->
+  <rect x="100" y="370" width="200" height="60" fill="#e8f0fe" stroke="#ddd" stroke-width="1"/>
+  <text x="200" y="405" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">Use Case</text>
+  
+  <rect x="300" y="370" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="400" y="405" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Task queues, messaging</text>
+  
+  <rect x="500" y="370" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="600" y="405" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Event streaming, analytics</text>
+  
+  <!-- Row 5: Ease of Use -->
+  <rect x="100" y="430" width="200" height="60" fill="#e8f0fe" stroke="#ddd" stroke-width="1"/>
+  <text x="200" y="465" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">Ease of Use</text>
+  
+  <rect x="300" y="430" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="400" y="465" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Easier setup</text>
+  
+  <rect x="500" y="430" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="600" y="465" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">More complex</text>
+  
+  <!-- Row 6: Persistence -->
+  <rect x="100" y="490" width="200" height="60" rx="0 0 0 10" fill="#e8f0fe" stroke="#ddd" stroke-width="1"/>
+  <text x="200" y="525" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">Persistence</text>
+  
+  <rect x="300" y="490" width="200" height="60" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="400" y="525" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Queue-based, less durable</text>
+  
+  <rect x="500" y="490" width="200" height="60" rx="0 0 10 0" fill="white" stroke="#ddd" stroke-width="1"/>
+  <text x="600" y="525" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Log-based, highly durable</text>
+</svg>
