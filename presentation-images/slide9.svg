@@ -4,66 +4,113 @@
   <rect width="800" height="600" fill="#f5f5f5"/>
   
   <!-- Title -->
-  <text x="400" y="80" font-family="Arial" font-size="36" font-weight="bold" text-anchor="middle" fill="#333">Sample Project Showcase</text>
+  <text x="400" y="60" font-family="Arial" font-size="36" font-weight="bold" text-anchor="middle" fill="#333">Sample Project Showcase</text>
   
-  <!-- Project Architecture Diagram -->
-  <rect x="100" y="130" width="600" height="420" rx="10" fill="white" stroke="#ddd" stroke-width="2"/>
+  <!-- Project Overview -->
+  <rect x="50" y="80" width="700" height="50" rx="5" fill="#e8f5e9" stroke="#81c784" stroke-width="2"/>
+  <text x="400" y="110" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">A Python-based demo with GUI interfaces showing message queue systems in action</text>
   
   <!-- RabbitMQ Demo Section -->
-  <text x="400" y="160" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">Real-time Order Processing System</text>
+  <rect x="50" y="140" width="340" height="430" rx="10" fill="white" stroke="#FF8C00" stroke-width="2"/>
+  <text x="220" y="170" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#FF8C00">RabbitMQ Demo</text>
   
-  <rect x="120" y="190" width="560" height="150" rx="5" fill="#e8f0fe" stroke="#4285f4" stroke-width="2"/>
-  <text x="150" y="220" font-family="Arial" font-size="20" font-weight="bold" fill="#4285f4">RabbitMQ Demo</text>
+  <!-- RabbitMQ Architecture -->
+  <rect x="70" y="190" width="300" height="200" rx="5" fill="#FFF3E0" stroke="#FF8C00" stroke-width="1"/>
   
-  <!-- RabbitMQ Flow -->
-  <rect x="150" y="240" width="100" height="60" rx="5" fill="#4285f4" stroke="#2a56c6" stroke-width="2"/>
-  <text x="200" y="275" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Web App</text>
-  <text x="200" y="295" font-family="Arial" font-size="12" text-anchor="middle" fill="white">(Order Placed)</text>
+  <!-- Exchange Types -->
+  <text x="220" y="215" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">Exchange Type Demonstrations</text>
   
-  <rect x="300" y="240" width="100" height="60" rx="5" fill="#ff6600" stroke="#e37400" stroke-width="2"/>
-  <text x="350" y="275" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">RabbitMQ</text>
-  <text x="350" y="295" font-family="Arial" font-size="12" text-anchor="middle" fill="white">(Queue)</text>
+  <!-- Direct Exchange -->
+  <rect x="80" y="230" width="280" height="40" rx="5" fill="#FF8C00" opacity="0.1" stroke="#FF8C00" stroke-width="1"/>
+  <text x="100" y="255" font-family="Arial" font-size="14" font-weight="bold" fill="#333">Direct Exchange:</text>
+  <text x="220" y="255" font-family="Arial" font-size="12" fill="#555">Exact routing key match</text>
   
-  <rect x="450" y="240" width="100" height="60" rx="5" fill="#34a853" stroke="#0d652d" stroke-width="2"/>
-  <text x="500" y="275" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Worker</text>
-  <text x="500" y="295" font-family="Arial" font-size="12" text-anchor="middle" fill="white">(Processing)</text>
+  <!-- Topic Exchange -->
+  <rect x="80" y="280" width="280" height="40" rx="5" fill="#FF8C00" opacity="0.1" stroke="#FF8C00" stroke-width="1"/>
+  <text x="100" y="305" font-family="Arial" font-size="14" font-weight="bold" fill="#333">Topic Exchange:</text>
+  <text x="220" y="305" font-family="Arial" font-size="12" fill="#555">Pattern matching routing</text>
   
-  <path d="M 250,270 L 300,270" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 400,270 L 450,270" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <!-- Fanout Exchange -->
+  <rect x="80" y="330" width="280" height="40" rx="5" fill="#FF8C00" opacity="0.1" stroke="#FF8C00" stroke-width="1"/>
+  <text x="100" y="355" font-family="Arial" font-size="14" font-weight="bold" fill="#333">Fanout Exchange:</text>
+  <text x="220" y="355" font-family="Arial" font-size="12" fill="#555">Broadcasts to all queues</text>
+  
+  <!-- GUI Interface -->
+  <text x="220" y="400" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">GUI Interface</text>
+  <rect x="80" y="410" width="280" height="140" rx="5" fill="#FF8C00" opacity="0.1" stroke="#FF8C00" stroke-width="1"/>
+  
+  <!-- Producer -->
+  <rect x="90" y="420" width="120" height="60" rx="5" fill="#FF8C00" opacity="0.2" stroke="#FF8C00" stroke-width="1"/>
+  <text x="150" y="450" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">Producer GUI</text>
+  <text x="150" y="470" font-family="Arial" font-size="10" text-anchor="middle" fill="#555">Message Input &amp; Logs</text>
+  
+  <!-- Consumer -->
+  <rect x="230" y="420" width="120" height="60" rx="5" fill="#FF8C00" opacity="0.2" stroke="#FF8C00" stroke-width="1"/>
+  <text x="290" y="450" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">Consumer GUI</text>
+  <text x="290" y="470" font-family="Arial" font-size="10" text-anchor="middle" fill="#555">Message Display &amp; Logs</text>
+  
+  <!-- Arrow -->
+  <path d="M 210,450 L 230,450" stroke="#FF8C00" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
   
   <!-- Kafka Demo Section -->
-  <rect x="120" y="360" width="560" height="150" rx="5" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
-  <text x="150" y="390" font-family="Arial" font-size="20" font-weight="bold" fill="#9c27b0">Kafka Demo</text>
+  <rect x="410" y="140" width="340" height="430" rx="10" fill="white" stroke="#007BFF" stroke-width="2"/>
+  <text x="580" y="170" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#007BFF">Kafka Demo</text>
   
-  <!-- Kafka Flow -->
-  <rect x="150" y="410" width="100" height="60" rx="5" fill="#4285f4" stroke="#2a56c6" stroke-width="2"/>
-  <text x="200" y="445" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">User Activity</text>
-  <text x="200" y="465" font-family="Arial" font-size="12" text-anchor="middle" fill="white">(Events)</text>
+  <!-- Kafka Architecture -->
+  <rect x="430" y="190" width="300" height="200" rx="5" fill="#E3F2FD" stroke="#007BFF" stroke-width="1"/>
   
-  <rect x="300" y="410" width="100" height="60" rx="5" fill="#231f20" stroke="#000" stroke-width="2"/>
-  <text x="350" y="445" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Kafka</text>
-  <text x="350" y="465" font-family="Arial" font-size="12" text-anchor="middle" fill="white">(Topic)</text>
+  <!-- Partitioning and Consumer Groups -->
+  <text x="580" y="215" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">Partitioning &amp; Consumer Groups</text>
   
-  <rect x="450" y="380" width="100" height="40" rx="5" fill="#fbbc05" stroke="#e37400" stroke-width="2"/>
-  <text x="500" y="405" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="white">Analytics Service</text>
+  <!-- Producers -->
+  <rect x="450" y="230" width="100" height="40" rx="5" fill="#007BFF" opacity="0.1" stroke="#007BFF" stroke-width="1"/>
+  <text x="500" y="255" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">Producer 1</text>
   
-  <rect x="450" y="430" width="100" height="40" rx="5" fill="#34a853" stroke="#0d652d" stroke-width="2"/>
-  <text x="500" y="455" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="white">Notification Service</text>
+  <rect x="450" y="280" width="100" height="40" rx="5" fill="#007BFF" opacity="0.1" stroke="#007BFF" stroke-width="1"/>
+  <text x="500" y="305" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">Producer 2</text>
   
-  <rect x="450" y="480" width="100" height="40" rx="5" fill="#ea4335" stroke="#c5221f" stroke-width="2"/>
-  <text x="500" y="505" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="white">Archive Service</text>
+  <!-- Partitions -->
+  <rect x="580" y="230" width="40" height="90" rx="5" fill="#007BFF" opacity="0.1" stroke="#007BFF" stroke-width="1"/>
+  <text x="600" y="275" font-family="Arial" font-size="12" text-anchor="middle" fill="#333" transform="rotate(-90, 600, 275)">Partition 0</text>
   
-  <path d="M 250,440 L 300,440" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 400,420 L 450,400" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 400,440 L 450,450" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 400,460 L 450,500" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <rect x="630" y="230" width="40" height="90" rx="5" fill="#007BFF" opacity="0.1" stroke="#007BFF" stroke-width="1"/>
+  <text x="650" y="275" font-family="Arial" font-size="12" text-anchor="middle" fill="#333" transform="rotate(-90, 650, 275)">Partition 1</text>
+  
+  <!-- Consumer Groups -->
+  <rect x="450" y="340" width="100" height="40" rx="5" fill="#007BFF" opacity="0.1" stroke="#007BFF" stroke-width="1"/>
+  <text x="500" y="365" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">Consumer Group 1</text>
+  
+  <rect x="580" y="340" width="100" height="40" rx="5" fill="#007BFF" opacity="0.1" stroke="#007BFF" stroke-width="1"/>
+  <text x="630" y="365" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">Consumer Group 2</text>
+  
+  <!-- Arrows -->
+  <path d="M 550,250 L 580,250" stroke="#007BFF" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 550,300 L 630,300" stroke="#007BFF" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 600,320 L 500,340" stroke="#007BFF" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 650,320 L 630,340" stroke="#007BFF" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+  
+  <!-- GUI Interface -->
+  <text x="580" y="400" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">GUI Interface</text>
+  <rect x="430" y="410" width="300" height="140" rx="5" fill="#007BFF" opacity="0.1" stroke="#007BFF" stroke-width="1"/>
+  
+  <!-- Producer GUI -->
+  <rect x="440" y="420" width="135" height="60" rx="5" fill="#007BFF" opacity="0.2" stroke="#007BFF" stroke-width="1"/>
+  <text x="507" y="450" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">Producer GUI</text>
+  <text x="507" y="470" font-family="Arial" font-size="10" text-anchor="middle" fill="#555">Random Partition Selection</text>
+  
+  <!-- Consumer GUI -->
+  <rect x="585" y="420" width="135" height="60" rx="5" fill="#007BFF" opacity="0.2" stroke="#007BFF" stroke-width="1"/>
+  <text x="652" y="450" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">Consumer GUI</text>
+  <text x="652" y="470" font-family="Arial" font-size="10" text-anchor="middle" fill="#555">Group-based Consumption</text>
   
   <!-- Key Learnings -->
-  <text x="600" y="390" font-family="Arial" font-size="16" font-weight="bold" fill="#333">Key Learnings:</text>
-  <circle cx="580" cy="415" r="5" fill="#ff6600"/>
-  <text x="590" y="420" font-family="Arial" font-size="14" fill="#333">RabbitMQ for tasks</text>
-  <circle cx="580" cy="440" r="5" fill="#231f20"/>
-  <text x="590" y="445" font-family="Arial" font-size="14" fill="#333">Kafka for streaming</text>
+  <text x="220" y="520" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Key Learning:</text>
+  <text x="220" y="540" font-family="Arial" font-size="12" text-anchor="middle" fill="#555">Flexibility with different</text>
+  <text x="220" y="555" font-family="Arial" font-size="12" text-anchor="middle" fill="#555">exchange types</text>
+  
+  <text x="580" y="520" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Key Learning:</text>
+  <text x="580" y="540" font-family="Arial" font-size="12" text-anchor="middle" fill="#555">Partitioning and consumer</text>
+  <text x="580" y="555" font-family="Arial" font-size="12" text-anchor="middle" fill="#555">group model for parallel processing</text>
   
   <!-- Arrow Marker -->
   <defs>

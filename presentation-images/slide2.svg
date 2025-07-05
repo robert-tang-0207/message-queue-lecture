@@ -4,66 +4,74 @@
   <rect width="800" height="600" fill="#f5f5f5"/>
   
   <!-- Title -->
-  <text x="400" y="80" font-family="Arial" font-size="36" font-weight="bold" text-anchor="middle" fill="#333">Types of Messaging Systems</text>
+  <text x="400" y="60" font-family="Arial" font-size="36" font-weight="bold" text-anchor="middle" fill="#333">Types of Messaging Systems</text>
   
-  <!-- Point-to-Point (Queue-based) -->
-  <rect x="50" y="130" width="700" height="120" rx="10" fill="white" stroke="#ddd" stroke-width="2"/>
-  <text x="70" y="160" font-family="Arial" font-size="22" font-weight="bold" fill="#4285f4">Point-to-Point (Queue-based)</text>
+  <!-- Point-to-Point -->
+  <rect x="50" y="90" width="700" height="150" rx="10" fill="white" stroke="#ddd" stroke-width="2"/>
+  <text x="70" y="120" font-family="Arial" font-size="22" font-weight="bold" fill="#4285f4">Point-to-Point (Queue-based)</text>
   
   <!-- Queue Diagram -->
-  <rect x="70" y="180" width="120" height="50" rx="5" fill="#4285f4" stroke="#2a56c6" stroke-width="2"/>
-  <text x="130" y="210" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Producer</text>
+  <rect x="70" y="140" width="150" height="60" rx="5" fill="#4285f4" opacity="0.2" stroke="#4285f4" stroke-width="2"/>
+  <text x="145" y="175" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Producer</text>
   
-  <rect x="240" y="180" width="120" height="50" rx="5" fill="#fbbc05" stroke="#e37400" stroke-width="2"/>
-  <text x="300" y="210" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Queue</text>
+  <rect x="270" y="140" width="150" height="60" rx="5" fill="#4285f4" opacity="0.2" stroke="#4285f4" stroke-width="2"/>
+  <text x="345" y="175" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Queue</text>
   
-  <rect x="410" y="180" width="120" height="50" rx="5" fill="#34a853" stroke="#0d652d" stroke-width="2"/>
-  <text x="470" y="210" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Consumer</text>
+  <rect x="470" y="140" width="150" height="60" rx="5" fill="#4285f4" opacity="0.2" stroke="#4285f4" stroke-width="2"/>
+  <text x="545" y="175" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Consumer</text>
   
-  <path d="M 190,205 L 240,205" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 360,205 L 410,205" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 220,170 L 270,170" stroke="#4285f4" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 420,170 L 470,170" stroke="#4285f4" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
   
-  <text x="580" y="205" font-family="Arial" font-size="16" fill="#333">Example: Task queues</text>
+  <text x="650" y="175" font-family="Arial" font-size="14" fill="#333">Examples: RabbitMQ,</text>
+  <text x="650" y="195" font-family="Arial" font-size="14" fill="#333">ActiveMQ, Amazon SQS</text>
   
-  <!-- Publish/Subscribe (Topic-based) -->
-  <rect x="50" y="270" width="700" height="120" rx="10" fill="white" stroke="#ddd" stroke-width="2"/>
-  <text x="70" y="300" font-family="Arial" font-size="22" font-weight="bold" fill="#fbbc05">Publish/Subscribe (Topic-based)</text>
+  <!-- Publish/Subscribe -->
+  <rect x="50" y="250" width="700" height="150" rx="10" fill="white" stroke="#ddd" stroke-width="2"/>
+  <text x="70" y="280" font-family="Arial" font-size="22" font-weight="bold" fill="#fbbc05">Publish/Subscribe (Topic-based)</text>
   
   <!-- Pub/Sub Diagram -->
-  <rect x="70" y="320" width="120" height="50" rx="5" fill="#4285f4" stroke="#2a56c6" stroke-width="2"/>
-  <text x="130" y="350" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Publisher</text>
+  <rect x="70" y="300" width="150" height="60" rx="5" fill="#fbbc05" opacity="0.2" stroke="#fbbc05" stroke-width="2"/>
+  <text x="145" y="335" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Publisher</text>
   
-  <rect x="240" y="320" width="120" height="50" rx="5" fill="#fbbc05" stroke="#e37400" stroke-width="2"/>
-  <text x="300" y="350" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Topic</text>
+  <rect x="270" y="300" width="150" height="60" rx="5" fill="#fbbc05" opacity="0.2" stroke="#fbbc05" stroke-width="2"/>
+  <text x="345" y="335" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Topic</text>
   
-  <rect x="410" y="290" width="120" height="50" rx="5" fill="#34a853" stroke="#0d652d" stroke-width="2"/>
-  <text x="470" y="320" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Subscriber 1</text>
+  <rect x="470" y="270" width="150" height="40" rx="5" fill="#fbbc05" opacity="0.2" stroke="#fbbc05" stroke-width="2"/>
+  <text x="545" y="295" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Subscriber 1</text>
   
-  <rect x="410" y="350" width="120" height="50" rx="5" fill="#34a853" stroke="#0d652d" stroke-width="2"/>
-  <text x="470" y="380" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Subscriber 2</text>
+  <rect x="470" y="320" width="150" height="40" rx="5" fill="#fbbc05" opacity="0.2" stroke="#fbbc05" stroke-width="2"/>
+  <text x="545" y="345" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Subscriber 2</text>
   
-  <path d="M 190,345 L 240,345" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 360,330 L 410,315" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 360,360 L 410,375" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <rect x="470" y="370" width="150" height="40" rx="5" fill="#fbbc05" opacity="0.2" stroke="#fbbc05" stroke-width="2"/>
+  <text x="545" y="395" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Subscriber 3</text>
   
-  <text x="580" y="345" font-family="Arial" font-size="16" fill="#333">Example: Notifications</text>
+  <path d="M 220,330 L 270,330" stroke="#fbbc05" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 420,330 L 470,290" stroke="#fbbc05" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 420,330 L 470,340" stroke="#fbbc05" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 420,330 L 470,390" stroke="#fbbc05" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  
+  <text x="650" y="310" font-family="Arial" font-size="14" fill="#333">Examples: RabbitMQ</text>
+  <text x="650" y="330" font-family="Arial" font-size="14" fill="#333">(fanout exchanges),</text>
+  <text x="650" y="350" font-family="Arial" font-size="14" fill="#333">Google Pub/Sub,</text>
+  <text x="650" y="370" font-family="Arial" font-size="14" fill="#333">AWS SNS</text>
   
   <!-- Event Streaming -->
-  <rect x="50" y="410" width="700" height="120" rx="10" fill="white" stroke="#ddd" stroke-width="2"/>
+  <rect x="50" y="410" width="700" height="150" rx="10" fill="white" stroke="#ddd" stroke-width="2"/>
   <text x="70" y="440" font-family="Arial" font-size="22" font-weight="bold" fill="#34a853">Event Streaming</text>
   
   <!-- Event Streaming Diagram -->
-  <rect x="70" y="460" width="120" height="50" rx="5" fill="#4285f4" stroke="#2a56c6" stroke-width="2"/>
-  <text x="130" y="490" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Producer</text>
+  <rect x="70" y="460" width="150" height="60" rx="5" fill="#34a853" opacity="0.2" stroke="#34a853" stroke-width="2"/>
+  <text x="145" y="495" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Events</text>
   
-  <rect x="240" y="460" width="290" height="50" rx="5" fill="#fbbc05" stroke="#e37400" stroke-width="2"/>
-  <text x="385" y="490" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Event Log (Persistent)</text>
+  <rect x="270" y="460" width="350" height="60" rx="5" fill="#34a853" opacity="0.2" stroke="#34a853" stroke-width="2"/>
+  <text x="445" y="495" font-family="Arial" font-size="16" text-anchor="middle" fill="#333">Event Stream (Log)</text>
   
-  <rect x="580" y="460" width="120" height="50" rx="5" fill="#34a853" stroke="#0d652d" stroke-width="2"/>
-  <text x="640" y="490" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Consumer</text>
+  <path d="M 220,490 L 270,490" stroke="#34a853" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
   
-  <path d="M 190,485 L 240,485" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 530,485 L 580,485" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <text x="650" y="470" font-family="Arial" font-size="14" fill="#333">Examples: Apache Kafka,</text>
+  <text x="650" y="490" font-family="Arial" font-size="14" fill="#333">Amazon Kinesis,</text>
+  <text x="650" y="510" font-family="Arial" font-size="14" fill="#333">Azure Event Hubs</text>
   
   <!-- Arrow Marker -->
   <defs>

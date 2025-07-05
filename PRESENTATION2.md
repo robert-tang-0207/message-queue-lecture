@@ -1,9 +1,17 @@
 # Presentation Guide: Concept of Messaging Systems and Examples
 
+## Slide 0: Title Slide
+- **Title**: Concept of Messaging Systems and Examples
+- **Content**:
+  - Presenter Name: Robert Tang
+  - Date: July 5, 2025
+- **Visual**: Clean professional background with title text and presenter information.
+- **Notes**: Opening slide to introduce the presentation topic and presenter.
+
 ## Slide 1: What is a Messaging System and Why We Use?
 - **Title**: Introduction to Messaging Systems
 - **Content**:
-  - **Definition**: Messaging systems enable asynchronous communication between applications by transmitting messages (data) through a broker or platform.
+  - **Definition**: Messaging systems enable asynchronous communication between applications by transmitting messages (data) through a broker or platform. They act as intermediaries that facilitate reliable data exchange between distributed systems without requiring direct connections.
   - **Key Components**: Producers (send messages), Consumers (receive messages), and Brokers (manage message delivery).
   - **Why Use?**:
     - **Decoupling**: Producers and consumers operate independently.
@@ -19,13 +27,17 @@
   - **Point-to-Point (Queue-based)**:
     - Messages sent to a queue; one consumer processes each message.
     - Example: Task queues for job processing.
+    - Examples: RabbitMQ, ActiveMQ, Amazon SQS
   - **Publish/Subscribe (Topic-based)**:
     - Messages broadcast to multiple subscribers via topics.
     - Example: Real-time notifications.
+    - Examples: RabbitMQ (with fanout exchanges), Google Pub/Sub, AWS SNS
   - **Event Streaming**:
     - Continuous stream of events stored in logs for processing.
     - Example: Real-time analytics.
+    - Examples: Apache Kafka, Amazon Kinesis, Azure Event Hubs
   - **Hybrid Models**: Combine queue and topic-based approaches.
+    - Examples: RabbitMQ (with different exchange types), NATS
 - **Visual**: Table or diagram comparing Queue vs. Pub/Sub vs. Event Streaming.
 - **Notes**: Briefly mention that RabbitMQ leans toward queue-based, Kafka toward event streaming.
 
@@ -52,6 +64,10 @@
     - Producers send messages to exchanges.
     - Exchanges route messages to queues based on routing keys.
     - Consumers pull messages from queues.
+  - **Exchange Types**:
+    - **Direct Exchange**: Routes messages to queues based on exact routing key match.
+    - **Topic Exchange**: Routes messages based on pattern matching of routing keys.
+    - **Fanout Exchange**: Broadcasts messages to all bound queues regardless of routing key.
   - **Strengths**:
     - Easy to set up and configure.
     - Supports complex routing patterns.
@@ -131,16 +147,24 @@
 ## Slide 9: Example Project
 - **Title**: Sample Project Showcase
 - **Content**:
-  - **Overview**: Briefly describe your project (e.g., “A demo showing real-time order processing using RabbitMQ and event streaming with Kafka”).
+  - **Overview**: "A Python-based demo with GUI interfaces showing message queue systems in action"
   - **RabbitMQ Demo**:
-    - Example: Order placed → RabbitMQ queue → Worker processes order.
+    - Three exchange type demonstrations:
+      - **Direct Exchange**: Messages sent to specific queues based on routing key
+      - **Topic Exchange**: Messages routed based on pattern matching
+      - **Fanout Exchange**: Messages broadcast to all bound queues
+    - GUI interface showing message production and consumption in real-time
   - **Kafka Demo**:
-    - Example: User events → Kafka topic → Real-time analytics dashboard.
+    - Demonstrates partitioning and consumer groups:
+      - Two producers sending to partitioned topics
+      - Multiple consumer groups reading from the same partitions
+      - Shows how consumer groups process messages independently
+    - GUI interface with real-time logging of message delivery
   - **Key Learnings**:
-    - RabbitMQ’s simplicity for task distribution.
-    - Kafka’s power for event streaming and scalability.
-- **Visual**: Screenshots or architecture diagram of your project.
-- **Notes**: Keep it high-level; offer to dive into code during Q/A if asked.
+    - RabbitMQ's flexibility with different exchange types
+    - Kafka's partitioning and consumer group model for parallel processing
+- **Visual**: Architecture diagram showing both demo systems
+- **Notes**: Mention that the code is available on GitHub and can be run locally
 
 ## Slide 10: Q/A
 - **Title**: Questions and Answers
@@ -153,8 +177,11 @@
 ## Slide 11: Thank You
 - **Title**: Thank You!
 - **Content**:
-  - “Thank you for your attention!”
-  - Contact info (e.g., email, LinkedIn).
-  - Optional: Reference links (e.g., RabbitMQ docsboru, Kafka docs, AWS pages).
-- **Visual**: Clean, professional background with your name/logo.
+  - "Thank you for your attention!"
+  - Reference links:
+    - RabbitMQ Documentation: rabbitmq.com/documentation.html
+    - Apache Kafka: kafka.apache.org
+    - AWS Messaging Services: aws.amazon.com/messaging
+    - GitHub Repository: github.com/robert-tang-0207/message-queue-lecture
+- **Visual**: Clean, professional background with presenter name.
 - **Notes**: End on a positive note, inviting further discussion post-presentation.
