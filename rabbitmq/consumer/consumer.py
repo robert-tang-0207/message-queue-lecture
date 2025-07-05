@@ -9,12 +9,13 @@ from tkinter import scrolledtext, ttk
 import pika
 import threading
 from datetime import datetime
+import argparse
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 class RabbitMQConsumerApp:
-    def __init__(self, root):
+    def __init__(self, root, queue_name=None, exchange_type=None):
         self.root = root
         self.root.title("RabbitMQ Consumer")
         self.root.geometry("600x500")
@@ -23,6 +24,11 @@ class RabbitMQConsumerApp:
         # Load configuration
         with open('../../config.json', 'r') as f:
             self.config = json.load(f)['rabbitmq']
+        
+        # Override config with command line parameters if provided
+        self.queue_name = queue_name if queue_name else self.config.get('queue', 'message_queue_demo')
+        self.exchange_type = exchange_type if exchange_type else 'direct'
+        self.exchange_name = f"message_exchange_{self.exchange_type}"
         
         # Create a unique consumer ID
         self.consumer_id = f"consumer-{random.randint(1000, 9999)}"
@@ -45,8 +51,25 @@ class RabbitMQConsumerApp:
             )
             self.channel = self.connection.channel()
             
+            # Declare an exchange based on the specified type
+            self.channel.exchange_declare(
+                exchange=self.exchange_name,
+                exchange_type=self.exchange_type,
+                durable=True
+            )
+            
             # Declare a queue
-            self.channel.queue_declare(queue=self.config['queue'], durable=True)
+            self.channel.queue_declare(queue=self.queue_name, durable=True)
+            
+            # Bind the queue to the exchange
+            # For direct and topic exchanges, we use the queue name as the routing key
+            # For fanout exchanges, the routing key is ignored
+            routing_key = self.queue_name if self.exchange_type != 'fanout' else ''
+            self.channel.queue_bind(
+                exchange=self.exchange_name,
+                queue=self.queue_name,
+                routing_key=routing_key
+            )
             
             # Set QoS
             self.channel.basic_qos(prefetch_count=1)
@@ -55,7 +78,7 @@ class RabbitMQConsumerApp:
             self.log_message(f"Successfully connected to RabbitMQ at {self.config['host']}")
             
             # Update UI
-            self.conn_label.config(text=f"Status: {self.connection_status} | Host: {self.config['host']} | Queue: {self.config['queue']}")
+            self.conn_label.config(text=f"Status: {self.connection_status} | Host: {self.config['host']} | Exchange: {self.exchange_name} ({self.exchange_type}) | Queue: {self.queue_name}")
             if hasattr(self, 'reconnect_button'):
                 self.reconnect_button.config(state=tk.NORMAL)
             self.pause_checkbox.config(state=tk.NORMAL)
@@ -96,7 +119,7 @@ class RabbitMQConsumerApp:
         
         self.conn_label = tk.Label(
             conn_frame,
-            text="Status: Initializing...",
+            text=f"Status: Initializing... | Exchange: {self.exchange_name} ({self.exchange_type}) | Queue: {self.queue_name}",
             font=("Arial", 10),
             bg="#f0f0f0"
         )
@@ -250,8 +273,10 @@ class RabbitMQConsumerApp:
             timestamp = data.get('timestamp', 'unknown')
             message = data.get('message', '')
             counter = data.get('counter', -1)
+            exchange_type = data.get('exchange_type', 'unknown')
+            queue = data.get('queue', 'unknown')
             
-            formatted_msg = f"From: {producer_id} | Counter: {counter} | Message: {message}"
+            formatted_msg = f"From: {producer_id} | Counter: {counter} | Exchange: {exchange_type} | Queue: {queue} | Message: {message}"
             self.log_message(formatted_msg, "RECEIVED")
             
             # Update status
@@ -270,12 +295,12 @@ class RabbitMQConsumerApp:
         try:
             # Start consuming
             self.consumer_tag = self.channel.basic_consume(
-                queue=self.config['queue'],
+                queue=self.queue_name,
                 on_message_callback=self.callback
             )
             
-            self.log_message("Started consuming messages")
-            self.status_var.set("Status: Running")
+            self.log_message(f"Started consuming messages from queue: {self.queue_name} bound to exchange: {self.exchange_name} ({self.exchange_type})")
+            self.status_var.set(f"Status: Running | Queue: {self.queue_name}")
             
             # Start consuming (blocking call)
             self.channel.start_consuming()
@@ -317,7 +342,14 @@ class RabbitMQConsumerApp:
         self.root.destroy()
 
 if __name__ == "__main__":
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='RabbitMQ Consumer')
+    parser.add_argument('--queue', type=str, help='Queue name to use')
+    parser.add_argument('--exchange-type', type=str, choices=['direct', 'topic', 'fanout'],
+                        help='Exchange type to use (direct, topic, or fanout)')
+    args = parser.parse_args()
+    
     root = tk.Tk()
-    app = RabbitMQConsumerApp(root)
+    app = RabbitMQConsumerApp(root, queue_name=args.queue, exchange_type=args.exchange_type)
     root.protocol("WM_DELETE_WINDOW", app.on_closing)
     root.mainloop()

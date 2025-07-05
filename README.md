@@ -95,8 +95,14 @@ make kafka-consumer GROUP_ID=my-group PARTITION=0
 # Run RabbitMQ producer
 make rabbitmq-producer
 
+# Run RabbitMQ producer with specific queue and exchange type
+make rabbitmq-producer QUEUE=my_queue EXCHANGE_TYPE=direct
+
 # Run RabbitMQ consumer
 make rabbitmq-consumer
+
+# Run RabbitMQ consumer with specific queue and exchange type
+make rabbitmq-consumer QUEUE=my_queue EXCHANGE_TYPE=fanout
 ```
 
 You can run multiple instances of each component by opening multiple terminals and running the same command. This allows you to see how multiple producers and consumers interact with the message queue.
@@ -140,6 +146,63 @@ When you run the demo and send messages from the producers:
 This demonstrates how Kafka enables:
 - Horizontal scaling (multiple consumers in a group process different partitions)
 - Multiple independent consumer applications (different groups process the same data)
+
+### RabbitMQ Demo Commands
+
+The project includes separate commands to demonstrate each RabbitMQ exchange type:
+
+```bash
+# Run the Direct Exchange demo
+make rabbitmq-demo-direct
+
+# Run the Topic Exchange demo
+make rabbitmq-demo-topic
+
+# Run the Fanout Exchange demo
+make rabbitmq-demo-fanout
+
+# Run all three demos at once
+make rabbitmq-demo
+```
+
+These commands launch:
+
+1. **Direct Exchange Demo** (`rabbitmq-demo-direct`):
+   - One producer sending to a direct exchange with queue `direct_queue`
+   - One consumer receiving from `direct_queue`
+
+2. **Topic Exchange Demo** (`rabbitmq-demo-topic`):
+   - One producer sending to a topic exchange with queue `topic_queue`
+   - Two consumers:
+     - One consumer with matching queue name `topic_queue` (will receive messages)
+     - One consumer with different queue name `different_topic_queue` (won't receive messages)
+
+3. **Fanout Exchange Demo** (`rabbitmq-demo-fanout`):
+   - One producer sending to a fanout exchange with queue `fanout_queue1`
+   - Two consumers: one receiving from `fanout_queue1` and another from `fanout_queue2`
+
+#### RabbitMQ Exchange Types
+
+The demo illustrates three key RabbitMQ exchange types:
+
+1. **Direct Exchange**: Messages are routed to queues based on an exact match of the routing key
+   - Good for direct point-to-point messaging
+
+2. **Topic Exchange**: Messages are routed to queues based on pattern matching of the routing key
+   - Good for selective multicast messaging
+
+3. **Fanout Exchange**: Messages are broadcast to all bound queues regardless of routing key
+   - Good for broadcast messaging
+
+#### Expected Behavior
+
+When you run the demo and send messages from the producers:
+
+- Messages sent by the Direct Producer will only be received by the Direct Consumer
+- Messages sent by the Topic Producer will only be received by the Topic Consumer
+- Messages sent by the Fanout Producer will be received by BOTH Fanout Consumers
+
+This demonstrates how RabbitMQ's exchange types enable different messaging patterns.
 
 ## Features
 

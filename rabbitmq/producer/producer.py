@@ -8,12 +8,13 @@ import tkinter as tk
 from tkinter import scrolledtext, ttk
 import pika
 from datetime import datetime
+import argparse
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 class RabbitMQProducerApp:
-    def __init__(self, root):
+    def __init__(self, root, queue_name=None, exchange_type=None):
         self.root = root
         self.root.title("RabbitMQ Producer")
         self.root.geometry("600x500")
@@ -22,6 +23,11 @@ class RabbitMQProducerApp:
         # Load configuration
         with open('../../config.json', 'r') as f:
             self.config = json.load(f)['rabbitmq']
+        
+        # Override config with command line parameters if provided
+        self.queue_name = queue_name if queue_name else self.config.get('queue', 'message_queue_demo')
+        self.exchange_type = exchange_type if exchange_type else 'direct'
+        self.exchange_name = f"message_exchange_{self.exchange_type}"
         
         # Create a unique producer ID
         self.producer_id = f"producer-{random.randint(1000, 9999)}"
@@ -39,8 +45,25 @@ class RabbitMQProducerApp:
             )
             self.channel = self.connection.channel()
             
+            # Declare an exchange based on the specified type
+            self.channel.exchange_declare(
+                exchange=self.exchange_name,
+                exchange_type=self.exchange_type,
+                durable=True
+            )
+            
             # Declare a queue
-            self.channel.queue_declare(queue=self.config['queue'], durable=True)
+            self.channel.queue_declare(queue=self.queue_name, durable=True)
+            
+            # Bind the queue to the exchange
+            # For direct and topic exchanges, we use the queue name as the routing key
+            # For fanout exchanges, the routing key is ignored
+            routing_key = self.queue_name if self.exchange_type != 'fanout' else ''
+            self.channel.queue_bind(
+                exchange=self.exchange_name,
+                queue=self.queue_name,
+                routing_key=routing_key
+            )
             
             self.connection_status = "Connected"
         except Exception as e:
@@ -69,7 +92,7 @@ class RabbitMQProducerApp:
         
         self.conn_label = tk.Label(
             conn_frame,
-            text=f"Status: {self.connection_status} | Host: {self.config['host']} | Queue: {self.config['queue']}",
+            text=f"Status: {self.connection_status} | Host: {self.config['host']} | Exchange: {self.exchange_name} ({self.exchange_type}) | Queue: {self.queue_name}",
             font=("Arial", 10),
             bg="#f0f0f0"
         )
@@ -153,7 +176,7 @@ class RabbitMQProducerApp:
         self.setup_rabbitmq_connection()
         
         # Update UI based on connection status
-        self.conn_label.config(text=f"Status: {self.connection_status} | Host: {self.config['host']} | Queue: {self.config['queue']}")
+        self.conn_label.config(text=f"Status: {self.connection_status} | Host: {self.config['host']} | Exchange: {self.exchange_name} ({self.exchange_type}) | Queue: {self.queue_name}")
         
         if self.connection is not None:
             self.log_message("Reconnection successful")
@@ -180,16 +203,24 @@ class RabbitMQProducerApp:
                 "producer_id": self.producer_id,
                 "timestamp": datetime.now().isoformat(),
                 "message": message,
-                "counter": self.message_counter
+                "counter": self.message_counter,
+                "exchange_type": self.exchange_type,
+                "queue": self.queue_name
             }
             
             # Convert to JSON and send
             json_payload = json.dumps(payload)
             
+            # Determine routing key based on exchange type
+            if self.exchange_type == 'fanout':
+                routing_key = ''
+            else:  # direct or topic
+                routing_key = self.queue_name
+            
             # Publish the message
             self.channel.basic_publish(
-                exchange='',
-                routing_key=self.config['queue'],
+                exchange=self.exchange_name,
+                routing_key=routing_key,
                 body=json_payload,
                 properties=pika.BasicProperties(
                     delivery_mode=2,  # make message persistent
@@ -237,7 +268,14 @@ class RabbitMQProducerApp:
         self.root.destroy()
 
 if __name__ == "__main__":
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='RabbitMQ Producer')
+    parser.add_argument('--queue', type=str, help='Queue name to use')
+    parser.add_argument('--exchange-type', type=str, choices=['direct', 'topic', 'fanout'],
+                        help='Exchange type to use (direct, topic, or fanout)')
+    args = parser.parse_args()
+    
     root = tk.Tk()
-    app = RabbitMQProducerApp(root)
+    app = RabbitMQProducerApp(root, queue_name=args.queue, exchange_type=args.exchange_type)
     root.protocol("WM_DELETE_WINDOW", app.on_closing)
     root.mainloop()

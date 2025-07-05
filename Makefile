@@ -45,11 +45,35 @@ kafka-consumer:
 # RabbitMQ targets
 rabbitmq-producer:
 	@echo "Starting RabbitMQ producer..."
-	cd rabbitmq/producer && python3 producer.py
+	@if [ -z "$(QUEUE)" ] && [ -z "$(EXCHANGE_TYPE)" ]; then \
+		echo "Using default queue and exchange type"; \
+		cd rabbitmq/producer && python3 producer.py; \
+	elif [ -z "$(EXCHANGE_TYPE)" ]; then \
+		echo "Using queue: $(QUEUE) with default exchange type"; \
+		cd rabbitmq/producer && python3 producer.py --queue $(QUEUE); \
+	elif [ -z "$(QUEUE)" ]; then \
+		echo "Using default queue with exchange type: $(EXCHANGE_TYPE)"; \
+		cd rabbitmq/producer && python3 producer.py --exchange-type $(EXCHANGE_TYPE); \
+	else \
+		echo "Using queue: $(QUEUE) with exchange type: $(EXCHANGE_TYPE)"; \
+		cd rabbitmq/producer && python3 producer.py --queue $(QUEUE) --exchange-type $(EXCHANGE_TYPE); \
+	fi
 
 rabbitmq-consumer:
 	@echo "Starting RabbitMQ consumer..."
-	cd rabbitmq/consumer && python3 consumer.py
+	@if [ -z "$(QUEUE)" ] && [ -z "$(EXCHANGE_TYPE)" ]; then \
+		echo "Using default queue and exchange type"; \
+		cd rabbitmq/consumer && python3 consumer.py; \
+	elif [ -z "$(EXCHANGE_TYPE)" ]; then \
+		echo "Using queue: $(QUEUE) with default exchange type"; \
+		cd rabbitmq/consumer && python3 consumer.py --queue $(QUEUE); \
+	elif [ -z "$(QUEUE)" ]; then \
+		echo "Using default queue with exchange type: $(EXCHANGE_TYPE)"; \
+		cd rabbitmq/consumer && python3 consumer.py --exchange-type $(EXCHANGE_TYPE); \
+	else \
+		echo "Using queue: $(QUEUE) with exchange type: $(EXCHANGE_TYPE)"; \
+		cd rabbitmq/consumer && python3 consumer.py --queue $(QUEUE) --exchange-type $(EXCHANGE_TYPE); \
+	fi
 
 # Kafka demo - runs multiple producers and consumers
 kafka-demo:
@@ -73,6 +97,51 @@ kafka-demo:
 	@echo "\033[1;34mGroup A consumers will only receive messages from their assigned partition\033[0m"
 	@echo "\033[1;34mGroup B consumers will also only receive messages from their assigned partition\033[0m"
 	@echo "\033[1;34mBoth groups will receive all messages independently\033[0m"
+
+# RabbitMQ demo - Direct Exchange (queue-specific routing)
+rabbitmq-demo-direct:
+	@echo "Starting RabbitMQ Direct Exchange Demo..."
+	@echo "Opening terminals for each component..."
+	@echo "\033[1;33mNote: You'll need to close each terminal window manually when done\033[0m"
+	@gnome-terminal --title="RabbitMQ Direct Producer" -- bash -c "cd $(CURDIR) && make rabbitmq-producer QUEUE=direct_queue EXCHANGE_TYPE=direct; exec bash"
+	@sleep 1
+	@gnome-terminal --title="RabbitMQ Direct Consumer" -- bash -c "cd $(CURDIR) && make rabbitmq-consumer QUEUE=direct_queue EXCHANGE_TYPE=direct; exec bash"
+	@sleep 1
+	@echo "\033[1;32mDirect Exchange components started!\033[0m"
+	@echo "\033[1;34mDirect Exchange: Messages sent to direct_queue will only be received by the direct_queue consumer\033[0m"
+
+# RabbitMQ demo - Topic Exchange (pattern-based routing)
+rabbitmq-demo-topic:
+	@echo "Starting RabbitMQ Topic Exchange Demo..."
+	@echo "Opening terminals for each component..."
+	@echo "\033[1;33mNote: You'll need to close each terminal window manually when done\033[0m"
+	@gnome-terminal --title="RabbitMQ Topic Producer" -- bash -c "cd $(CURDIR) && make rabbitmq-producer QUEUE=topic_queue EXCHANGE_TYPE=topic; exec bash"
+	@sleep 1
+	@gnome-terminal --title="RabbitMQ Topic Consumer (Matching Queue)" -- bash -c "cd $(CURDIR) && make rabbitmq-consumer QUEUE=topic_queue EXCHANGE_TYPE=topic; exec bash"
+	@sleep 1
+	@gnome-terminal --title="RabbitMQ Topic Consumer (Different Queue - Won't Receive)" -- bash -c "cd $(CURDIR) && make rabbitmq-consumer QUEUE=different_topic_queue EXCHANGE_TYPE=topic; exec bash"
+	@sleep 1
+	@echo "\033[1;32mTopic Exchange components started!\033[0m"
+	@echo "\033[1;34mTopic Exchange: Messages sent to topic_queue will be received only by the consumer with matching queue name\033[0m"
+	@echo "\033[1;34mThe consumer with queue name 'different_topic_queue' will not receive any messages\033[0m"
+
+# RabbitMQ demo - Fanout Exchange (broadcast to all queues)
+rabbitmq-demo-fanout:
+	@echo "Starting RabbitMQ Fanout Exchange Demo..."
+	@echo "Opening terminals for each component..."
+	@echo "\033[1;33mNote: You'll need to close each terminal window manually when done\033[0m"
+	@gnome-terminal --title="RabbitMQ Fanout Producer" -- bash -c "cd $(CURDIR) && make rabbitmq-producer QUEUE=fanout_queue1 EXCHANGE_TYPE=fanout; exec bash"
+	@sleep 1
+	@gnome-terminal --title="RabbitMQ Fanout Consumer 1" -- bash -c "cd $(CURDIR) && make rabbitmq-consumer QUEUE=fanout_queue1 EXCHANGE_TYPE=fanout; exec bash"
+	@sleep 1
+	@gnome-terminal --title="RabbitMQ Fanout Consumer 2" -- bash -c "cd $(CURDIR) && make rabbitmq-consumer QUEUE=fanout_queue2 EXCHANGE_TYPE=fanout; exec bash"
+	@sleep 1
+	@echo "\033[1;32mFanout Exchange components started!\033[0m"
+	@echo "\033[1;34mFanout Exchange: Messages sent to any queue will be broadcast to ALL consumers connected to the fanout exchange\033[0m"
+
+# Combined RabbitMQ demo (runs all three exchange type demos)
+rabbitmq-demo: rabbitmq-demo-direct rabbitmq-demo-topic rabbitmq-demo-fanout
+	@echo "\033[1;32mAll RabbitMQ demos have been started!\033[0m"
 
 # Clean up
 clean:
