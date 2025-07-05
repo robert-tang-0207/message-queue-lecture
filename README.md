@@ -45,8 +45,11 @@ bin/zookeeper-server-start.sh config/zookeeper.properties
 # In another terminal, start Kafka
 bin/kafka-server-start.sh config/server.properties
 
-# Create the topic used in the examples
-bin/kafka-topics.sh --create --topic message_queue_demo --bootstrap-server localhost:9092
+# Create the topic used in the examples with 2 partitions
+bin/kafka-topics.sh --create --topic message_queue_demo --partitions 2 --replication-factor 1 --bootstrap-server localhost:9092
+
+# Verify the topic was created with 2 partitions
+bin/kafka-topics.sh --describe --topic message_queue_demo --bootstrap-server localhost:9092
 ```
 
 ### Installing RabbitMQ (Quick Start)
@@ -83,6 +86,12 @@ make kafka-producer
 # Run Kafka consumer
 make kafka-consumer
 
+# Run Kafka consumer with a specific group ID
+make kafka-consumer GROUP_ID=my-group
+
+# Run Kafka consumer with a specific group ID and partition
+make kafka-consumer GROUP_ID=my-group PARTITION=0
+
 # Run RabbitMQ producer
 make rabbitmq-producer
 
@@ -91,6 +100,46 @@ make rabbitmq-consumer
 ```
 
 You can run multiple instances of each component by opening multiple terminals and running the same command. This allows you to see how multiple producers and consumers interact with the message queue.
+
+### Kafka Demo Command
+
+The project includes a special `kafka-demo` command that demonstrates Kafka's partitioning and consumer group behavior:
+
+```bash
+make kafka-demo
+```
+
+This command automatically launches:
+
+1. **Two Kafka producers**: Each randomly sends messages to either partition 0 or partition 1
+2. **Four Kafka consumers**:
+   - Two consumers in Group A (one assigned to partition 0, one to partition 1)
+   - Two consumers in Group B (one assigned to partition 0, one to partition 1)
+
+#### What the Demo Shows
+
+This demo illustrates several key Kafka concepts:
+
+1. **Partitioning**: Messages are distributed across two partitions (0 and 1)
+2. **Partition Assignment**: Each consumer is explicitly assigned to a specific partition
+3. **Consumer Groups**: Two separate consumer groups (A and B) receive the same messages independently
+4. **Parallel Processing**: Within each group, consumers process different partitions simultaneously
+
+#### Expected Behavior
+
+When you run the demo and send messages from the producers:
+
+- Messages sent to partition 0 will appear in:
+  - Group A's partition 0 consumer
+  - Group B's partition 0 consumer
+  
+- Messages sent to partition 1 will appear in:
+  - Group A's partition 1 consumer
+  - Group B's partition 1 consumer
+
+This demonstrates how Kafka enables:
+- Horizontal scaling (multiple consumers in a group process different partitions)
+- Multiple independent consumer applications (different groups process the same data)
 
 ## Features
 

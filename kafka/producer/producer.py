@@ -131,24 +131,31 @@ class KafkaProducerApp:
                 self.log_message("ERROR: Cannot send empty message")
                 return
                 
-            # Add timestamp and producer ID to message
-            payload = {
+            # Choose a random partition (0 or 1)
+            partition = random.randint(0, 1)
+            
+            # Create a message with metadata
+            message_data = {
                 "producer_id": self.producer_id,
                 "timestamp": datetime.now().isoformat(),
                 "message": message,
-                "counter": self.message_counter
+                "counter": self.message_counter,
+                "partition": partition  # Store the partition we're sending to
             }
             
-            # Convert to JSON and send
-            json_payload = json.dumps(payload)
+            # Convert message to JSON
+            json_message = json.dumps(message_data)
+            
+            # Send message to Kafka with explicit partition
             self.producer.produce(
                 self.config['topic'],
-                json_payload.encode('utf-8'),
+                value=json_message.encode('utf-8'),
+                partition=partition,  # Explicitly specify which partition to use
                 callback=self.delivery_callback
             )
             self.producer.poll(0)  # Trigger delivery reports
             
-            self.log_message(f"Sending: {json_payload}")
+            self.log_message(f"Sending: {json_message}")
             self.message_counter += 1
             
             # If not in auto mode, update the message with a counter

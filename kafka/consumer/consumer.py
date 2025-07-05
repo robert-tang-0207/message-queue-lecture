@@ -4,16 +4,17 @@ import time
 import random
 import os
 import sys
+import argparse
 import tkinter as tk
 from tkinter import scrolledtext, ttk
-from confluent_kafka import Consumer, KafkaError
+from confluent_kafka import Consumer, KafkaError, TopicPartition
 from datetime import datetime
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 class KafkaConsumerApp:
-    def __init__(self, root):
+    def __init__(self, root, group_id=None, partition=None):
         self.root = root
         self.root.title("Kafka Consumer")
         self.root.geometry("600x500")
@@ -23,19 +24,32 @@ class KafkaConsumerApp:
         with open('../../config.json', 'r') as f:
             self.config = json.load(f)['kafka']
         
+        # Use provided group_id or generate a unique one
+        self.group_id = group_id if group_id else f"group-{random.randint(1000, 9999)}"
+        
         # Create a unique consumer ID
         self.consumer_id = f"consumer-{random.randint(1000, 9999)}"
         
         # Configure Kafka consumer
         self.consumer = Consumer({
             'bootstrap.servers': self.config['bootstrap_servers'],
-            'group.id': self.config['group_id'],
+            'group.id': self.group_id,
             'auto.offset.reset': 'latest',
-            'client.id': self.consumer_id
+            'client.id': self.consumer_id,
+            'partition.assignment.strategy': 'range'
         })
         
-        # Subscribe to topic
-        self.consumer.subscribe([self.config['topic']])
+        # Handle specific partition if provided
+        self.specific_partition = partition
+        if self.specific_partition is not None:
+            # Assign to specific partition instead of subscribing
+            topic_partition = TopicPartition(self.config['topic'], int(self.specific_partition))
+            self.consumer.assign([topic_partition])
+            self.root.title(f"Kafka Consumer - Group {self.group_id} - Partition {self.specific_partition}")
+        else:
+            # Subscribe to topic (let Kafka handle partition assignment)
+            self.consumer.subscribe([self.config['topic']])
+            self.root.title(f"Kafka Consumer - Group {self.group_id} - All Partitions")
         
         self.setup_ui()
         self.start_consuming()
@@ -59,9 +73,11 @@ class KafkaConsumerApp:
         conn_frame = tk.Frame(self.root, bg="#f0f0f0")
         conn_frame.pack(fill=tk.X, padx=10, pady=5)
         
+        partition_info = f"Partition: {self.specific_partition}" if self.specific_partition is not None else "All Partitions"
+        
         tk.Label(
             conn_frame,
-            text=f"Connected to: {self.config['bootstrap_servers']} | Topic: {self.config['topic']} | Group: {self.config['group_id']}",
+            text=f"Connected to: {self.config['bootstrap_servers']} | Topic: {self.config['topic']} | Group: {self.group_id} | {partition_info}",
             font=("Arial", 10),
             bg="#f0f0f0"
         ).pack(anchor="w")
@@ -157,39 +173,52 @@ class KafkaConsumerApp:
                 if msg is None:
                     pass
                 elif msg.error():
-                    if msg.error().code() != KafkaError._PARTITION_EOF:
-                        self.log_message(f"Consumer error: {msg.error()}", "ERROR")
+                    self.log_message(f"ERROR: {msg.error()}", "ERROR")
                 else:
+                    # Process received message
                     try:
-                        # Decode and parse the message
-                        message_value = msg.value().decode('utf-8')
-                        data = json.loads(message_value)
+                        # Get partition information from the message
+                        partition = msg.partition()
+                        topic = msg.topic()
+                        offset = msg.offset()
                         
-                        # Format the message nicely
-                        producer_id = data.get('producer_id', 'unknown')
-                        timestamp = data.get('timestamp', 'unknown')
-                        message = data.get('message', '')
-                        counter = data.get('counter', -1)
+                        # Parse the message content
+                        message_data = json.loads(msg.value().decode('utf-8'))
+                        producer_id = message_data.get('producer_id', 'unknown')
+                        timestamp = message_data.get('timestamp', 'unknown')
+                        message = message_data.get('message', 'No message')
+                        counter = message_data.get('counter', 0)
+                        msg_partition = message_data.get('partition', 'unknown')
                         
-                        formatted_msg = f"From: {producer_id} | Counter: {counter} | Message: {message}"
-                        self.log_message(formatted_msg, "RECEIVED")
+                        # Check if this message is for our assigned partition
+                        if self.specific_partition is not None and partition != int(self.specific_partition):
+                            # This should not happen with manual assignment, but log it if it does
+                            self.log_message(
+                                f"WARNING: Received message for partition {partition} but we're assigned to {self.specific_partition}", 
+                                "ERROR"
+                            )
                         
-                        # Update status
+                        self.log_message(
+                            f"From {producer_id} [{counter}] on partition {partition}: {message}", 
+                            "RECEIVED"
+                        )
                         self.message_count += 1
-                        self.status_var.set(f"Status: Running | Messages received: {self.message_count}")
-                        
-                    except json.JSONDecodeError:
-                        self.log_message(f"Received non-JSON message: {message_value}", "ERROR")
+                        self.status_var.set(f"Status: Received {self.message_count} messages | Topic: {topic} | Consumer Group: {self.group_id}")
                     except Exception as e:
-                        self.log_message(f"Error processing message: {str(e)}", "ERROR")
-                        
+                        self.log_message(f"Error processing message: {e}", "ERROR")
             except Exception as e:
-                self.log_message(f"Consumption error: {str(e)}", "ERROR")
+                self.log_message(f"Error polling Kafka: {e}", "ERROR")
                 
-        # Schedule the next check
+        # Schedule next poll
         self.root.after(100, self.start_consuming)
 
 if __name__ == "__main__":
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Kafka Consumer')
+    parser.add_argument('--group-id', dest='group_id', help='Consumer group ID')
+    parser.add_argument('--partition', dest='partition', help='Specific partition to consume from')
+    args = parser.parse_args()
+    
     root = tk.Tk()
-    app = KafkaConsumerApp(root)
+    app = KafkaConsumerApp(root, args.group_id, args.partition)
     root.mainloop()
